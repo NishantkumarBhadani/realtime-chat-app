@@ -1,4 +1,4 @@
-import { account,ID } from "./appwrite";
+import { account, ID } from "./appwrite";
 
 export interface RegisterInput {
   name: string;
@@ -11,11 +11,7 @@ export interface LoginInput {
   password: string;
 }
 
-export async function registerUser({
-  name,
-  email,
-  password,
-}: RegisterInput) {
+export async function registerUser({ name, email, password }: RegisterInput) {
   const user = await account.create({
     userId: ID.unique(),
     email,
@@ -26,10 +22,20 @@ export async function registerUser({
   return user;
 }
 
-export async function loginUser({
-  email,
-  password,
-}: LoginInput) {
+export async function loginUser({ email, password }: LoginInput) {
+  // Check whether a session already exists
+  try {
+    await account.get();
+
+    // If a session exists, remove it before logging in
+    // with the requested account.
+    await account.deleteSession({
+      sessionId: "current",
+    });
+  } catch {
+    // No active session, so continue with login.
+  }
+
   const session = await account.createEmailPasswordSession({
     email,
     password,
