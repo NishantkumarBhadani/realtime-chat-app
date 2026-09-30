@@ -1,36 +1,103 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Real-Time One-to-One Chat Application
 
-## Getting Started
+A responsive real-time one-to-one chat application built with **Next.js, TypeScript, Tailwind CSS, and Appwrite**.
 
-First, run the development server:
+The application supports secure authentication, user discovery, private conversations, message history, and real-time message delivery using Appwrite Realtime.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Live Demo
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+**Live Application:**  
+_Add your Vercel URL here after deployment._
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Example:
 
-## Learn More
+`https://realtime-chat-app.vercel.app`
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Features
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Authentication
+- User registration with name, email, and password
+- Email/password login
+- Logout functionality
+- Protected chat route
+- Current authenticated user detection
 
-## Deploy on Vercel
+### User Management
+- Displays all registered users
+- Automatically excludes the currently logged-in user
+- Users can select another registered user to start a conversation
+- Selected conversation is clearly highlighted
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### One-to-One Messaging
+- Private conversations between two users
+- Correct sender and recipient association
+- Message history loaded when a conversation is selected
+- Messages displayed in chronological order
+- Sender name and timestamp displayed
+- Prevents sending empty messages
+- Prevents sending messages to yourself
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Real-Time Communication
+- Appwrite Realtime integration
+- New messages appear instantly without refreshing the page
+- Realtime events are filtered to the currently selected conversation
+- Conversation switching is supported
+- Duplicate realtime messages are prevented
+
+### Responsive UI
+- Desktop layout with users list and chat window
+- Mobile-friendly conversation interface
+- Mobile back navigation from chat to users
+- Responsive message input and chat layout
+
+### Security
+- Appwrite authentication
+- User JWT used for authenticated server requests
+- Appwrite API key kept server-side
+- API key is never exposed to the browser
+- Message read permissions are granted only to sender and recipient
+- Environment variables used for configuration
+- `.env.local` excluded from Git
+
+---
+
+# Tech Stack
+
+| Technology | Purpose |
+|---|---|
+| Next.js 15 | React framework |
+| TypeScript | Type safety |
+| Tailwind CSS | Styling and responsive UI |
+| Appwrite | Authentication, database and realtime |
+| Node.js | Runtime |
+| Vercel | Deployment |
+| Git & GitHub | Version control |
+
+---
+
+#  Architecture
+
+The application follows a simple separation of concerns:
+
+```text
+Browser
+   │
+   ├── Next.js UI
+   │
+   ├── Appwrite Client SDK
+   │      ├── Authentication
+   │      ├── User data
+   │      ├── Message history
+   │      └── Realtime subscription
+   │
+   └── Next.js API Route
+          │
+          ├── Verify user JWT
+          │
+          └── Appwrite Server SDK
+                 │
+                 └── Create message
