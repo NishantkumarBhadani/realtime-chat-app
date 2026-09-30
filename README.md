@@ -9,11 +9,7 @@ The application supports secure authentication, user discovery, private conversa
 ## Live Demo
 
 **Live Application:**  
-_Add your Vercel URL here after deployment._
-
-Example:
-
-`https://realtime-chat-app.vercel.app`
+https://realtime-chat-app-woad-rho.vercel.app/
 
 ---
 
